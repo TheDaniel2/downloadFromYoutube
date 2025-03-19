@@ -1,12 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const DownloadFromYoutube());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => MyAppState(),
+      child: const MyApp(),
+    ),
+  );
 }
 
-class DownloadFromYoutube extends StatelessWidget {
-  const DownloadFromYoutube({super.key});
+class MyAppState extends ChangeNotifier {
+  String inputText = "";
+
+  void onTextChange(String text) {
+    inputText = text;
+    notifyListeners();
+  }
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +30,7 @@ class DownloadFromYoutube extends StatelessWidget {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlueAccent),
       ),
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
@@ -28,10 +42,11 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
-      body: Builder(
-        builder: (context) {
-          return DownloadField();
-        },
+      body: Column(
+        children: const [
+          DownloadField(),
+          DownloadsView(),
+        ],
       ),
     );
   }
@@ -42,17 +57,22 @@ class DownloadField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container( //Container me permite mexer no posicionamento e na aparencia
+    var appState = context.watch<MyAppState>();
+
+    return Container(
       color: Colors.white,
-      padding: EdgeInsets.all(10.0),
-      margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
+      padding: const EdgeInsets.all(10.0),
+      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
       child: Row(
         children: [
-          Expanded( //TextField precisa estar dentro de algo como Expanded
+          Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               child: TextField(
-                decoration: InputDecoration(
+                onChanged: (text) {
+                  appState.onTextChange(text);
+                },
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "URL YouTube Video",
                 ),
@@ -61,6 +81,20 @@ class DownloadField extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class DownloadsView extends StatelessWidget {
+  const DownloadsView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+
+    return Text(
+      appState.inputText,
+      style: const TextStyle(fontSize: 18, color: Colors.black),
     );
   }
 }
