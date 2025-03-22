@@ -42,12 +42,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
-      body: Column(
-        children: const [
-          DownloadField(),
-          DownloadsView(),
-        ],
-      ),
+      body: Column(children: const [DownloadField(), DownloadsView()]),
     );
   }
 }
@@ -81,6 +76,22 @@ class DownloadField extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class DownloadButton extends StatelessWidget {
+  const DownloadButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return ElevatedButton.icon(
+      onPressed: () {
+        print("...");
+      },
+      icon: Icon(Icons.download),
+      label: Text("Download"),
     );
   }
 }
