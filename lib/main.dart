@@ -52,29 +52,38 @@ class DownloadField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.all(10.0),
       margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              child: TextField(
-                onChanged: (text) {
-                  appState.onTextChange(text);
-                },
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: "URL YouTube Video",
-                ),
-              ),
-            ),
-          ),
+      child: Row(children: [
+          UrlField(),
+          DownloadButton(),
         ],
+      ),
+    );
+  }
+}
+
+class UrlField extends StatelessWidget {
+  const UrlField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+        child: TextField(
+          onChanged: (text) {
+            appState.onTextChange(text);
+          },
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            hintText: "URL YouTube Video",
+          ),
+        ),
       ),
     );
   }
@@ -85,7 +94,7 @@ class DownloadButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    
     return ElevatedButton.icon(
       onPressed: () {
         print("...");
