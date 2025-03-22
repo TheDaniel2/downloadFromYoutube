@@ -41,6 +41,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Download content from YouTube"),
+      ),
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: Column(children: const [DownloadField(), DownloadsView()]),
     );
@@ -55,7 +58,7 @@ class DownloadField extends StatelessWidget {
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.all(10.0),
-      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
+      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
       child: Row(children: [
           UrlField(),
           DownloadButton(),
